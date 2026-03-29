@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MoVitrinePro — Créez votre site pro en 2 minutes</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #05040f;
+  --bg2: #0d0b1f;
+  --card: rgba(255,255,255,0.04);
+  --card-border: rgba(255,255,255,0.08);
+  --text: #f0eeff;
+  --muted: rgba(240,238,255,0.5);
+  --accent: #6c63ff;
+  --accent2: #a78bfa;
+  --accent3: #38bdf8;
+  --green: #34d399;
+  --radius: 16px;
+  --shadow: 0 8px 40px rgba(108,99,255,0.15);
+}
+[data-theme="light"] {
+  --bg: #f5f4ff;
+  --bg2: #eeeeff;
+  --card: rgba(108,99,255,0.06);
+  --card-border: rgba(108,99,255,0.15);
+  --text: #12101f;
+  --muted: rgba(18,16,31,0.5);
+  --accent: #5b52f0;
+  --accent2: #7c3aed;
+  --accent3: #0284c7;
+  --green: #059669;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;transition:background 0.3s,color 0.3s;}
+
+/* MESH BG */
+.mesh{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
+.mesh::before{content:'';position:absolute;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(108,99,255,0.25) 0%,transparent 70%);top:-200px;left:-200px;animation:float1 12s ease-in-out infinite;}
+.mesh::after{content:'';position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(56,189,248,0.18) 0%,transparent 70%);bottom:-150px;right:-100px;animation:float2 15s ease-in-out infinite;}
+.mesh-mid{position:fixed;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(167,139,250,0.15) 0%,transparent 70%);top:40%;left:50%;transform:translate(-50%,-50%);animation:float3 10s ease-in-out infinite;pointer-events:none;z-index:0;}
+@keyframes float1{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(60px,40px) scale(1.1);}}
+@keyframes float2{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(-40px,-60px) scale(1.08);}}
+@keyframes float3{0%,100%{transform:translate(-50%,-50%) scale(1);}50%{transform:translate(-50%,-50%) scale(1.15);}}
+
+/* LAYOUT */
+section,header,footer{position:relative;z-index:1;}
+
+/* HEADER */
+header{display:flex;align-items:center;justify-content:space-between;padding:20px 6%;position:sticky;top:0;z-index:100;backdrop-filter:blur(20px);background:rgba(5,4,15,0.6);border-bottom:1px solid var(--card-border);}
+[data-theme="light"] header{background:rgba(245,244,255,0.7);}
+.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.4rem;background:linear-gradient(135deg,var(--accent2),var(--accent3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-0.5px;}
+nav{display:flex;align-items:center;gap:12px;}
+.btn{padding:10px 22px;border-radius:50px;font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:500;cursor:pointer;border:none;transition:all 0.2s;}
+.btn-ghost{background:transparent;color:var(--text);border:1.5px solid var(--card-border);}
+.btn-ghost:hover{border-color:var(--accent2);color:var(--accent2);}
+.btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;box-shadow:0 4px 20px rgba(108,99,255,0.35);}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(108,99,255,0.5);}
+.theme-toggle{width:38px;height:38px;border-radius:50%;background:var(--card);border:1.5px solid var(--card-border);color:var(--text);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.1rem;transition:all 0.2s;}
+.theme-toggle:hover{border-color:var(--accent2);}
+
+/* HERO */
+.hero{padding:100px 6% 80px;text-align:center;max-width:900px;margin:0 auto;}
+.badge{display:inline-flex;align-items:center;gap:8px;background:rgba(108,99,255,0.12);border:1px solid rgba(108,99,255,0.25);border-radius:50px;padding:6px 16px;font-size:0.82rem;color:var(--accent2);margin-bottom:32px;}
+.badge span{width:7px;height:7px;background:var(--green);border-radius:50%;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.4;}}
+h1{font-family:'Syne',sans-serif;font-size:clamp(2.4rem,6vw,4.2rem);font-weight:800;line-height:1.1;letter-spacing:-1.5px;margin-bottom:20px;}
+h1 .grad{background:linear-gradient(135deg,var(--accent2),var(--accent3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.hero p{font-size:1.1rem;color:var(--muted);max-width:560px;margin:0 auto 40px;line-height:1.7;}
+.hero-cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+.btn-big{padding:14px 32px;font-size:1rem;}
+
+/* STATS */
+.stats{display:flex;justify-content:center;gap:48px;padding:48px 6%;flex-wrap:wrap;border-top:1px solid var(--card-border);border-bottom:1px solid var(--card-border);}
+.stat{text-align:center;}
+.stat-num{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;background:linear-gradient(135deg,var(--accent2),var(--accent3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.stat-label{font-size:0.85rem;color:var(--muted);margin-top:4px;}
+
+/* FEATURES */
+.section{padding:80px 6%;}
+.section-title{font-family:'Syne',sans-serif;font-size:clamp(1.6rem,4vw,2.4rem);font-weight:800;text-align:center;margin-bottom:12px;letter-spacing:-0.5px;}
+.section-sub{text-align:center;color:var(--muted);margin-bottom:56px;max-width:500px;margin-left:auto;margin-right:auto;}
+.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;max-width:1100px;margin:0 auto;}
+.feature-card{background:var(--card);border:1px solid var(--card-border);border-radius:var(--radius);padding:32px;transition:all 0.3s;position:relative;overflow:hidden;}
+.feature-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(108,99,255,0.08),transparent);opacity:0;transition:opacity 0.3s;}
+.feature-card:hover{border-color:rgba(108,99,255,0.4);transform:translateY(-4px);box-shadow:var(--shadow);}
+.feature-card:hover::before{opacity:1;}
+.feature-icon{width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,rgba(108,99,255,0.2),rgba(56,189,248,0.2));display:flex;align-items:center;justify-content:center;font-size:1.6rem;margin-bottom:20px;}
+.feature-card h3{font-family:'Syne',sans-serif;font-weight:700;font-size:1.1rem;margin-bottom:10px;}
+.feature-card p{color:var(--muted);font-size:0.9rem;line-height:1.6;}
+
+/* PRICING */
+.pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;max-width:900px;margin:0 auto;}
+.plan{background:var(--card);border:1px solid var(--card-border);border-radius:var(--radius);padding:36px 28px;position:relative;transition:all 0.3s;}
+.plan.featured{border-color:var(--accent);background:rgba(108,99,255,0.08);transform:scale(1.03);}
+.plan-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-size:0.75rem;font-weight:600;padding:4px 14px;border-radius:50px;white-space:nowrap;}
+.plan-name{font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;margin-bottom:8px;color:var(--muted);}
+.plan-price{font-family:'Syne',sans-serif;font-size:2.4rem;font-weight:800;margin-bottom:4px;}
+.plan-price span{font-size:1rem;color:var(--muted);font-weight:400;}
+.free-badge{display:inline-block;background:rgba(52,211,153,0.12);border:1px solid rgba(52,211,153,0.3);color:var(--green);font-size:0.75rem;padding:3px 10px;border-radius:50px;margin-bottom:20px;}
+.plan-features{list-style:none;margin:20px 0 28px;}
+.plan-features li{padding:8px 0;font-size:0.9rem;color:var(--muted);border-bottom:1px solid var(--card-border);display:flex;align-items:center;gap:8px;}
+.plan-features li::before{content:'✓';color:var(--green);font-weight:700;font-size:0.8rem;}
+.plan-cta{width:100%;padding:12px;border-radius:50px;font-size:0.95rem;font-weight:500;cursor:pointer;border:none;transition:all 0.2s;}
+.plan-cta.primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;}
+.plan-cta.ghost{background:transparent;color:var(--text);border:1.5px solid var(--card-border);}
+.plan-cta:hover{transform:translateY(-2px);}
+
+/* FOOTER */
+footer{padding:40px 6%;border-top:1px solid var(--card-border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;}
+footer p{color:var(--muted);font-size:0.85rem;}
+
+/* ===== DASHBOARD ===== */
+#dashboard{display:none;min-height:100vh;background:var(--bg);}
+.dash-nav{display:flex;align-items:center;justify-content:space-between;padding:16px 6%;background:var(--bg2);border-bottom:1px solid var(--card-border);position:sticky;top:0;z-index:100;}
+.dash-body{padding:40px 6%;max-width:1200px;margin:0 auto;}
+.dash-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:40px;flex-wrap:wrap;gap:16px;}
+.dash-header h2{font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:800;}
+.credits-bar{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:16px 24px;display:flex;align-items:center;gap:16px;margin-bottom:32px;}
+.credits-num{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:var(--accent2);}
+.credits-label{font-size:0.85rem;color:var(--muted);}
+.credit-progress{flex:1;height:8px;background:var(--card-border);border-radius:50px;overflow:hidden;}
+.credit-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:50px;width:68%;}
+.sites-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;}
+.site-card{background:var(--card);border:1px solid var(--card-border);border-radius:var(--radius);overflow:hidden;transition:all 0.3s;}
+.site-card:hover{border-color:var(--accent);transform:translateY(-3px);box-shadow:var(--shadow);}
+.site-preview{height:140px;background:linear-gradient(135deg,#1a1040,#0f2a40);display:flex;align-items:center;justify-content:center;font-size:2rem;position:relative;overflow:hidden;}
+.site-preview::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent,rgba(0,0,0,0.3));}
+.site-info{padding:16px;}
+.site-name{font-family:'Syne',sans-serif;font-weight:700;margin-bottom:4px;}
+.site-url{font-size:0.8rem;color:var(--accent3);margin-bottom:12px;}
+.site-actions{display:flex;gap:8px;}
+.btn-sm{padding:6px 14px;border-radius:50px;font-size:0.8rem;font-weight:500;cursor:pointer;border:none;transition:all 0.2s;}
+.btn-edit{background:rgba(108,99,255,0.15);color:var(--accent2);border:1px solid rgba(108,99,255,0.3);}
+.btn-del{background:rgba(239,68,68,0.1);color:#ef4444;border:1px solid rgba(239,68,68,0.2);}
+.btn-sm:hover{transform:scale(1.05);}
+.new-site-card{background:var(--card);border:2px dashed var(--card-border);border-radius:var(--radius);display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:240px;cursor:pointer;transition:all 0.3s;gap:12px;}
+.new-site-card:hover{border-color:var(--accent);color:var(--accent2);}
+.new-site-card span{font-size:2.5rem;}
+.new-site-card p{font-size:0.9rem;color:var(--muted);}
+
+/* ===== EDITOR ===== */
+#editor{display:none;min-height:100vh;background:var(--bg);}
+.editor-nav{display:flex;align-items:center;justify-content:space-between;padding:14px 3%;background:var(--bg2);border-bottom:1px solid var(--card-border);position:sticky;top:0;z-index:100;}
+.editor-layout{display:grid;grid-template-columns:340px 1fr;min-height:calc(100vh - 65px);}
+.editor-panel{background:var(--bg2);border-right:1px solid var(--card-border);padding:24px;overflow-y:auto;max-height:calc(100vh - 65px);}
+.editor-preview{background:#fff;position:relative;overflow:hidden;}
+[data-theme="light"] .editor-preview{background:#f8f8f8;}
+.panel-section{margin-bottom:28px;}
+.panel-label{font-family:'Syne',sans-serif;font-weight:700;font-size:0.8rem;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:12px;}
+.template-options{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:0;}
+.tmpl-opt{background:var(--card);border:2px solid var(--card-border);border-radius:10px;padding:14px 8px;text-align:center;cursor:pointer;transition:all 0.2s;font-size:0.75rem;}
+.tmpl-opt span{display:block;font-size:1.5rem;margin-bottom:4px;}
+.tmpl-opt.active{border-color:var(--accent);background:rgba(108,99,255,0.12);color:var(--accent2);}
+.field{margin-bottom:14px;}
+.field label{display:block;font-size:0.82rem;color:var(--muted);margin-bottom:6px;}
+.field input,.field textarea,.field select{width:100%;background:var(--card);border:1px solid var(--card-border);border-radius:8px;padding:10px 14px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.9rem;outline:none;transition:border 0.2s;}
+.field input:focus,.field textarea:focus{border-color:var(--accent);}
+.field textarea{resize:vertical;min-height:70px;}
+.color-row{display:flex;gap:8px;}
+.color-row input[type="color"]{width:44px;height:36px;border:1px solid var(--card-border);border-radius:8px;cursor:pointer;background:none;padding:2px;}
+.preview-frame{width:100%;height:100%;border:none;min-height:calc(100vh - 65px);}
+.publish-bar{padding:16px 3%;background:var(--bg2);border-top:1px solid var(--card-border);display:flex;align-items:center;gap:12px;justify-content:flex-end;}
+.domain-preview{font-size:0.85rem;color:var(--accent3);background:rgba(56,189,248,0.08);border:1px solid rgba(56,189,248,0.2);padding:8px 16px;border-radius:50px;}
+
+/* ===== AUTH ===== */
+#auth{display:none;min-height:100vh;background:var(--bg);align-items:center;justify-content:center;}
+.auth-box{background:var(--card);border:1px solid var(--card-border);border-radius:20px;padding:48px 40px;width:100%;max-width:420px;margin:20px;}
+.auth-box h2{font-family:'Syne',sans-serif;font-weight:800;font-size:1.8rem;margin-bottom:8px;text-align:center;}
+.auth-box p{color:var(--muted);text-align:center;margin-bottom:32px;font-size:0.9rem;}
+.social-btn{width:100%;padding:12px;border-radius:50px;background:var(--card);border:1.5px solid var(--card-border);color:var(--text);font-size:0.9rem;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:10px;font-family:'DM Sans',sans-serif;}
+.social-btn:hover{border-color:var(--accent2);}
+.divider{display:flex;align-items:center;gap:12px;margin:20px 0;color:var(--muted);font-size:0.82rem;}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--card-border);}
+.auth-switch{text-align:center;margin-top:20px;font-size:0.85rem;color:var(--muted);}
+.auth-switch a{color:var(--accent2);cursor:pointer;text-decoration:none;}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;right:24px;background:var(--bg2);border:1px solid var(--green);color:var(--green);padding:14px 22px;border-radius:12px;font-size:0.9rem;z-index:9999;transform:translateY(100px);opacity:0;transition:all 0.3s;}
+.toast.show{transform:translateY(0);opacity:1;}
+
+@media(max-width:768px){
+  .editor-layout{grid-template-columns:1fr;}
+  .editor-panel{max-height:none;}
+  .editor-preview{display:none;}
+  .pricing-grid .plan.featured{transform:none;}
+  nav .btn-ghost{display:none;}
+}
+</style>
+</head>
+<body>
+<div class="mesh"><div class="mesh-mid"></div></div>
+
+<!-- ===== LANDING PAGE ===== -->
+<div id="landing">
+  <header>
+    <div class="logo">MoVitrinePro</div>
+    <nav>
+      <button class="theme-toggle" onclick="toggleTheme()" title="Mode sombre/clair">🌙</button>
+      <button class="btn btn-ghost" onclick="showAuth('login')">Connexion</button>
+      <button class="btn btn-primary" onclick="showAuth('signup')">Commencer gratuitement</button>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="badge"><span></span> Gratuit pendant 2 ans et demi</div>
+    <h1>Créez votre site pro<br><span class="grad">en 2 minutes chrono</span></h1>
+    <p>Sites vitrine, boutiques e-commerce, portfolios — tout ce dont vos clients ont besoin, sans code, sans limite.</p>
+    <div class="hero-cta">
+      <button class="btn btn-primary btn-big" onclick="showAuth('signup')">Commencer gratuitement →</button>
+      <button class="btn btn-ghost btn-big" onclick="showDashboard()">Voir la démo</button>
+    </div>
+  </section>
+
+  <section class="stats">
+    <div class="stat"><div class="stat-num">2min</div><div class="stat-label">Pour créer un site</div></div>
+    <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Gratuit maintenant</div></div>
+    <div class="stat"><div class="stat-num">3</div><div class="stat-label">Types de sites</div></div>
+    <div class="stat"><div class="stat-num">0€</div><div class="stat-label">Carte requise</div></div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Tout ce qu'il vous faut</h2>
+    <p class="section-sub">Créez des sites professionnels pour vos clients en quelques clics</p>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🏪</div>
+        <h3>Site Vitrine</h3>
+        <p>Présentation professionnelle de l'activité, contact, galerie photos et avis clients. Parfait pour artisans et commerçants.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🛒</div>
+        <h3>Boutique E-commerce</h3>
+        <p>Vendez en ligne avec catalogue produits, panier et paiement intégré. Gérez vos commandes depuis le dashboard.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🌐</div>
+        <h3>Sous-domaine Gratuit</h3>
+        <p>Chaque site reçoit automatiquement son propre lien <strong>nomclient.movitrinepro.vercel.app</strong> prêt à partager.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🎨</div>
+        <h3>Personnalisation Totale</h3>
+        <p>Couleurs, logo, textes, images — tout se personnalise en temps réel avec l'aperçu instantané.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <h3>Dashboard Client</h3>
+        <p>Gérez tous les sites de vos clients depuis un seul endroit. Modifier, publier, supprimer en un clic.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔗</div>
+        <h3>Synchronisation GitHub</h3>
+        <p>Les fichiers sont automatiquement sauvegardés sur votre GitHub. Rien ne se perd jamais.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background:var(--bg2);">
+    <h2 class="section-title">Tarifs simples</h2>
+    <p class="section-sub">Tout gratuit pendant 2 ans et demi — ensuite vous choisissez</p>
+    <div class="pricing-grid">
+      <div class="plan">
+        <div class="plan-name">Gratuit</div>
+        <div class="plan-price">0€ <span>/mois</span></div>
+        <div class="free-badge">✓ Gratuit 2 ans et demi</div>
+        <ul class="plan-features">
+          <li>10 crédits / mois</li>
+          <li>1 site actif</li>
+          <li>Sous-domaine gratuit</li>
+          <li>Templates basiques</li>
+        </ul>
+        <button class="plan-cta ghost" onclick="showAuth('signup')">Commencer</button>
+      </div>
+      <div class="plan featured">
+        <div class="plan-badge">⭐ Populaire</div>
+        <div class="plan-name">Pro</div>
+        <div class="plan-price">10€ <span>/mois</span></div>
+        <div class="free-badge">✓ Gratuit 2 ans et demi</div>
+        <ul class="plan-features">
+          <li>100 crédits / mois</li>
+          <li>Sites illimités</li>
+          <li>Domaine personnalisé</li>
+          <li>Boutique e-commerce</li>
+        </ul>
+        <button class="plan-cta primary" onclick="showAuth('signup')">Choisir Pro</button>
+      </div>
+      <div class="plan">
+        <div class="plan-name">Premium</div>
+        <div class="plan-price">25€ <span>/mois</span></div>
+        <div class="free-badge">✓ Gratuit 2 ans et demi</div>
+        <ul class="plan-features">
+          <li>Crédits illimités</li>
+          <li>Tout du plan Pro</li>
+          <li>IA rédige le contenu</li>
+          <li>Analytics + support prioritaire</li>
+        </ul>
+        <button class="plan-cta ghost" onclick="showAuth('signup')">Choisir Premium</button>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="logo">MoVitrinePro</div>
+    <p>© 2024 MoVitrinePro · Tous droits réservés</p>
+    <p style="color:var(--muted);font-size:0.8rem;">Conçu par Mohammed</p>
+  </footer>
+</div>
+
+<!-- ===== AUTH ===== -->
+<div id="auth" style="display:none;">
+  <div class="auth-box">
+    <h2 id="auth-title">Connexion</h2>
+    <p id="auth-sub">Bon retour sur MoVitrinePro</p>
+    <button class="social-btn" onclick="fakeAuth()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+      Continuer avec GitHub
+    </button>
+    <button class="social-btn" onclick="fakeAuth()">
+      <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+      Continuer avec Google
+    </button>
+    <div class="divider">ou</div>
+    <div class="field"><label>Email</label><input type="email" placeholder="votre@email.com"></div>
+    <div class="field"><label>Mot de passe</label><input type="password" placeholder="••••••••"></div>
+    <button class="btn btn-primary" style="width:100%;padding:13px;margin-top:8px;" onclick="fakeAuth()" id="auth-btn">Se connecter</button>
+    <div class="auth-switch" id="auth-switch">Pas encore de compte ? <a onclick="switchAuth()">S'inscrire</a></div>
+    <div class="auth-switch" style="margin-top:8px;"><a onclick="showLanding()" style="color:var(--muted);">← Retour à l'accueil</a></div>
+  </div>
+</div>
+
+<!-- ===== DASHBOARD ===== -->
+<div id="dashboard">
+  <nav class="dash-nav">
+    <div class="logo">MoVitrinePro</div>
+    <div style="display:flex;gap:10px;align-items:center;">
+      <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+      <button class="btn btn-ghost" onclick="showLanding()">Déconnexion</button>
+    </div>
+  </nav>
+  <div class="dash-body">
+    <div class="dash-header">
+      <h2>👋 Bonjour Mohammed</h2>
+      <button class="btn btn-primary" onclick="showEditor()">+ Nouveau site</button>
+    </div>
+    <div class="credits-bar">
+      <div>
+        <div class="credits-num">68</div>
+        <div class="credits-label">crédits restants ce mois</div>
+      </div>
+      <div class="credit-progress"><div class="credit-fill"></div></div>
+      <div style="font-size:0.82rem;color:var(--muted);">68 / 100</div>
+    </div>
+    <div class="sites-grid">
+      <div class="new-site-card" onclick="showEditor()">
+        <span>＋</span>
+        <p>Créer un nouveau site</p>
+      </div>
+      <div class="site-card">
+        <div class="site-preview">🏪</div>
+        <div class="site-info">
+          <div class="site-name">Boulangerie Martin</div>
+          <div class="site-url">boulangerie-martin.movitrinepro.vercel.app</div>
+          <div class="site-actions">
+            <button class="btn-sm btn-edit" onclick="showEditor()">✏️ Modifier</button>
+            <button class="btn-sm btn-del" onclick="deleteCard(this)">🗑️ Suppr.</button>
+          </div>
+        </div>
+      </div>
+      <div class="site-card">
+        <div class="site-preview">🛒</div>
+        <div class="site-info">
+          <div class="site-name">Boutique Mode Lina</div>
+          <div class="site-url">mode-lina.movitrinepro.vercel.app</div>
+          <div class="site-actions">
+            <button class="btn-sm btn-edit" onclick="showEditor()">✏️ Modifier</button>
+            <button class="btn-sm btn-del" onclick="deleteCard(this)">🗑️ Suppr.</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== EDITOR ===== -->
+<div id="editor">
+  <nav class="editor-nav">
+    <div style="display:flex;align-items:center;gap:16px;">
+      <button class="btn btn-ghost" style="padding:8px 16px;" onclick="showDashboard()">← Dashboard</button>
+      <div class="logo" style="font-size:1.1rem;">Éditeur de site</div>
+    </div>
+    <div style="display:flex;gap:10px;align-items:center;">
+      <div class="domain-preview" id="domain-display">monsite.movitrinepro.vercel.app</div>
+      <button class="btn btn-primary" style="padding:10px 22px;" onclick="publishSite()">🚀 Publier</button>
+    </div>
+  </nav>
+  <div class="editor-layout">
+    <div class="editor-panel">
+      <div class="panel-section">
+        <div class="panel-label">Type de site</div>
+        <div class="template-options">
+          <div class="tmpl-opt active" onclick="setTemplate(this,'vitrine')"><span>🏪</span>Vitrine</div>
+          <div class="tmpl-opt" onclick="setTemplate(this,'ecom')"><span>🛒</span>E-com</div>
+          <div class="tmpl-opt" onclick="setTemplate(this,'portfolio')"><span>🎨</span>Portfolio</div>
+        </div>
+      </div>
+      <div class="panel-section">
+        <div class="panel-label">Informations</div>
+        <div class="field"><label>Nom du site / Entreprise</label><input type="text" id="site-name" placeholder="Ex: Boulangerie Martin" oninput="updatePreview()"></div>
+        <div class="field"><label>Slogan</label><input type="text" id="site-slogan" placeholder="Ex: Le pain frais chaque matin" oninput="updatePreview()"></div>
+        <div class="field"><label>Description</label><textarea id="site-desc" placeholder="Décrivez l'activité..." oninput="updatePreview()"></textarea></div>
+        <div class="field"><label>Téléphone</label><input type="text" id="site-phone" placeholder="+33 6 00 00 00 00" oninput="updatePreview()"></div>
+        <div class="field"><label>Email</label><input type="text" id="site-email" placeholder="contact@monsite.fr" oninput="updatePreview()"></div>
+        <div class="field"><label>Adresse</label><input type="text" id="site-address" placeholder="12 rue de la Paix, Paris" oninput="updatePreview()"></div>
+      </div>
+      <div class="panel-section">
+        <div class="panel-label">Couleurs</div>
+        <div class="color-row">
+          <div class="field" style="flex:1"><label>Principale</label><input type="color" id="color1" value="#6c63ff" oninput="updatePreview()"></div>
+          <div class="field" style="flex:1"><label>Secondaire</label><input type="color" id="color2" value="#38bdf8" oninput="updatePreview()"></div>
+          <div class="field" style="flex:1"><label>Texte</label><input type="color" id="color3" value="#ffffff" oninput="updatePreview()"></div>
+        </div>
+      </div>
+      <div class="panel-section">
+        <div class="panel-label">Sous-domaine</div>
+        <div class="field">
+          <label>Nom du sous-domaine</label>
+          <input type="text" id="subdomain" placeholder="monsite" oninput="updateDomain()">
+        </div>
+      </div>
+    </div>
+    <div class="editor-preview">
+      <iframe class="preview-frame" id="preview-frame" src="about:blank"></iframe>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ===== NAV =====
+function showLanding(){hide(['auth','dashboard','editor']);show('landing');}
+function showAuth(mode){hide(['landing','dashboard','editor']);show('auth');
+  if(mode==='signup'){document.getElementById('auth-title').textContent='Créer un compte';document.getElementById('auth-sub').textContent='Rejoignez MoVitrinePro gratuitement';document.getElementById('auth-btn').textContent='Créer mon compte';document.getElementById('auth-switch').innerHTML='Déjà un compte ? <a onclick="switchAuth()">Se connecter</a>';}
+  else{document.getElementById('auth-title').textContent='Connexion';document.getElementById('auth-sub').textContent='Bon retour sur MoVitrinePro';document.getElementById('auth-btn').textContent='Se connecter';document.getElementById('auth-switch').innerHTML='Pas encore de compte ? <a onclick="switchAuth()">S\'inscrire</a>';}}
+function switchAuth(){const t=document.getElementById('auth-title');t.textContent==='Connexion'?showAuth('signup'):showAuth('login');}
+function fakeAuth(){showDashboard();showToast('✅ Connecté avec succès !');}
+function showDashboard(){hide(['landing','auth','editor']);show('dashboard');}
+function showEditor(){hide(['landing','auth','dashboard']);show('editor');updatePreview();}
+
+function hide(ids){ids.forEach(id=>{const el=document.getElementById(id);if(el){el.style.display='none';}});}
+function show(id){const el=document.getElementById(id);if(!el)return;el.style.display=id==='auth'?'flex':'block';}
+
+// ===== THEME =====
+function toggleTheme(){
+  const html=document.documentElement;
+  const isDark=html.getAttribute('data-theme')==='dark';
+  html.setAttribute('data-theme',isDark?'light':'dark');
+  document.querySelectorAll('.theme-toggle').forEach(b=>b.textContent=isDark?'🌙':'☀️');
+}
+
+// ===== EDITOR =====
+let currentTemplate='vitrine';
+function setTemplate(el,type){document.querySelectorAll('.tmpl-opt').forEach(e=>e.classList.remove('active'));el.classList.add('active');currentTemplate=type;updatePreview();}
+
+function updateDomain(){
+  const val=document.getElementById('subdomain').value||'monsite';
+  const slug=val.toLowerCase().replace(/[^a-z0-9-]/g,'-');
+  document.getElementById('domain-display').textContent=slug+'.movitrinepro.vercel.app';
+}
+
+function updatePreview(){
+  const name=document.getElementById('site-name').value||'Mon Site Pro';
+  const slogan=document.getElementById('site-slogan').value||'Bienvenue sur notre site';
+  const desc=document.getElementById('site-desc').value||'Nous sommes à votre service.';
+  const phone=document.getElementById('site-phone').value||'+33 6 00 00 00 00';
+  const email=document.getElementById('site-email').value||'contact@monsite.fr';
+  const address=document.getElementById('site-address').value||'Paris, France';
+  const c1=document.getElementById('color1').value;
+  const c2=document.getElementById('color2').value;
+  const c3=document.getElementById('color3').value;
+
+  const templates={
+    vitrine:`<!DOCTYPE html><html><head><meta charset="UTF-8"><style>*{margin:0;padding:0;box-sizing:border-box;}body{font-family:sans-serif;background:#fff;color:#111;}header{background:linear-gradient(135deg,${c1},${c2});color:${c3};padding:60px 40px;text-align:center;}header h1{font-size:2.5rem;margin-bottom:12px;}header p{font-size:1.1rem;opacity:0.9;}nav{background:rgba(0,0,0,0.15);padding:12px 40px;display:flex;gap:24px;justify-content:center;}nav a{color:${c3};text-decoration:none;font-size:0.9rem;}.section{padding:60px 40px;max-width:900px;margin:0 auto;}.section h2{font-size:1.6rem;margin-bottom:20px;color:${c1};}p{line-height:1.7;color:#444;}.contact{background:#f8f8f8;padding:40px;text-align:center;}.contact p{margin:8px 0;}.footer{background:#111;color:#aaa;text-align:center;padding:24px;font-size:0.85rem;}</style></head><body><header><h1>${name}</h1><p>${slogan}</p></header><nav><a href="#">Accueil</a><a href="#">Services</a><a href="#">À propos</a><a href="#">Contact</a></nav><div class="section"><h2>À propos de nous</h2><p>${desc}</p></div><div class="contact"><h2 style="color:${c1};margin-bottom:20px;">Contactez-nous</h2><p>📞 ${phone}</p><p>✉️ ${email}</p><p>📍 ${address}</p></div><div class="footer">${name} — Tous droits réservés</div></body></html>`,
+    ecom:`<!DOCTYPE html><html><head><meta charset="UTF-8"><style>*{margin:0;padding:0;box-sizing:border-box;}body{font-family:sans-serif;background:#f9f9f9;}header{background:linear-gradient(135deg,${c1},${c2});color:${c3};padding:20px 40px;display:flex;justify-content:space-between;align-items:center;}header h1{font-size:1.5rem;}.cart{background:rgba(255,255,255,0.2);padding:8px 18px;border-radius:20px;cursor:pointer;}.hero{background:${c1};color:${c3};padding:60px 40px;text-align:center;}.hero h2{font-size:2.2rem;margin-bottom:12px;}.hero p{opacity:0.9;}.hero button{background:${c3};color:${c1};border:none;padding:14px 32px;border-radius:30px;font-size:1rem;cursor:pointer;margin-top:20px;font-weight:600;}.products{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;padding:40px;max-width:1000px;margin:0 auto;}.product{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.08);}.product-img{height:160px;background:linear-gradient(135deg,${c1}33,${c2}33);display:flex;align-items:center;justify-content:center;font-size:3rem;}.product-info{padding:16px;}.product-name{font-weight:600;margin-bottom:6px;}.product-price{color:${c1};font-weight:700;font-size:1.1rem;}.add-btn{width:100%;background:${c1};color:#fff;border:none;padding:10px;border-radius:8px;cursor:pointer;margin-top:10px;}.footer{background:#111;color:#aaa;text-align:center;padding:24px;font-size:0.85rem;}</style></head><body><header><h1>🛒 ${name}</h1><div class="cart">🛒 Panier (0)</div></header><div class="hero"><h2>${slogan}</h2><p>${desc}</p><button>Voir nos produits</button></div><div class="products"><div class="product"><div class="product-img">👗</div><div class="product-info"><div class="product-name">Produit 1</div><div class="product-price">29,99 €</div><button class="add-btn">Ajouter au panier</button></div></div><div class="product"><div class="product-img">👟</div><div class="product-info"><div class="product-name">Produit 2</div><div class="product-price">49,99 €</div><button class="add-btn">Ajouter au panier</button></div></div><div class="product"><div class="product-img">👜</div><div class="product-info"><div class="product-name">Produit 3</div><div class="product-price">39,99 €</div><button class="add-btn">Ajouter au panier</button></div></div></div><div class="footer">${name} — ${email} — ${phone}</div></body></html>`,
+    portfolio:`<!DOCTYPE html><html><head><meta charset="UTF-8"><style>*{margin:0;padding:0;box-sizing:border-box;}body{font-family:sans-serif;background:#0a0a0a;color:#fff;}.hero{min-height:100vh;background:linear-gradient(135deg,${c1},${c2});display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px;}.hero h1{font-size:3.5rem;font-weight:900;margin-bottom:16px;}.hero p{font-size:1.2rem;opacity:0.85;max-width:500px;}.skills{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:32px;}.skill{background:rgba(255,255,255,0.2);padding:8px 20px;border-radius:30px;font-size:0.9rem;}.work{padding:80px 40px;max-width:900px;margin:0 auto;text-align:center;}.work h2{font-size:2rem;color:${c1};margin-bottom:40px;}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}.card{background:#1a1a1a;border-radius:12px;padding:30px;border:1px solid ${c1}33;}.card span{font-size:2rem;display:block;margin-bottom:12px;}.contact{background:${c1};padding:60px 40px;text-align:center;}.contact h2{font-size:2rem;margin-bottom:20px;}.contact a{background:#fff;color:${c1};padding:14px 32px;border-radius:30px;font-weight:700;text-decoration:none;display:inline-block;}</style></head><body><div class="hero"><h1>${name}</h1><p>${slogan}</p><div class="skills"><span class="skill">Design</span><span class="skill">Développement</span><span class="skill">Marketing</span></div></div><div class="work"><h2>Mes réalisations</h2><div class="grid"><div class="card"><span>🎨</span><strong>Projet 1</strong></div><div class="card"><span>💻</span><strong>Projet 2</strong></div><div class="card"><span>📱</span><strong>Projet 3</strong></div></div></div><div class="contact"><h2>Travaillons ensemble</h2><a href="mailto:${email}">Me contacter</a></div></body></html>`
+  };
+
+  const frame=document.getElementById('preview-frame');
+  const doc=frame.contentDocument||frame.contentWindow.document;
+  doc.open();doc.write(templates[currentTemplate]);doc.close();
+}
+
+function publishSite(){
+  const name=document.getElementById('site-name').value||'monsite';
+  const slug=name.toLowerCase().replace(/[^a-z0-9]/g,'-');
+  showToast('🚀 Site publié ! '+slug+'.movitrinepro.vercel.app');
+  setTimeout(()=>showDashboard(),2000);
+}
+
+function deleteCard(btn){btn.closest('.site-card').style.opacity='0';setTimeout(()=>btn.closest('.site-card').remove(),300);showToast('🗑️ Site supprimé');}
+
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000);}
+
+// Init preview
+window.onload=()=>updatePreview();
+</script>
+</body>
+</html>
